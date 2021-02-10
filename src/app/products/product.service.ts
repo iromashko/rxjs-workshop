@@ -26,12 +26,15 @@ export class ProductService {
     this.productCategoryService.productCategories$,
   ]).pipe(
     map(([products, categories]) =>
-      products.map((product) => ({
-        ...product,
-        price: product.price * 1.5,
-        category: categories.find((c) => product.categoryId === c.id).name,
-        searchKey: [product.productName],
-      }) as Product)
+      products.map(
+        (product) =>
+          ({
+            ...product,
+            price: product.price * 1.5,
+            category: categories.find((c) => product.categoryId === c.id).name,
+            searchKey: [product.productName],
+          } as Product)
+      )
     )
   );
 
@@ -70,10 +73,3 @@ export class ProductService {
     return throwError(errorMessage);
   }
 }
-
-// productCategories$ = this.http
-// .get<ProductCategory[]>(this.productCategoriesUrl)
-// .pipe(
-//   tap((data) => console.log(`categories`, JSON.stringify(data))),
-//   catchError(this.handleError)
-// );
